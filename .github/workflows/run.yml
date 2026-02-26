@@ -1,0 +1,22 @@
+name: Daily News Scraper
+
+on:
+  schedule:
+    # 한국시간(KST) 기준: 오전 7시 50분, 오후 4시 정각
+    - cron: '50 22 * * *'
+    - cron: '0 7 * * *'
+  workflow_dispatch: # 우리가 원할 때 수동으로 버튼을 눌러서 실행할 수 있게 해주는 기능
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run Scraper
+        run: python main.py
